@@ -45,7 +45,7 @@ pnpm dev
 Alternatively, you can run specific apps:
 
 ```sh
-pnpm turbo run dev --filter=backend
+pnpm turbo run dev --filter=api
 pnpm turbo run dev --filter=frontend
 ```
 
