@@ -39,7 +39,7 @@ const PostCard: FC<Props> = ({
           className={cn("h-60 object-cover", !thumbnail && "dark:invert-100")}
         />
         <p className="line-clamp-3">{content}</p>
-        <p>Createt {formatRelativeTime(new Date(createdAt ?? ""))}</p>
+        <p>Created {formatRelativeTime(new Date(createdAt ?? ""))}</p>
       </CardContent>
       <CardFooter className="mt-auto justify-end">
         <Button asChild variant={"link"}>

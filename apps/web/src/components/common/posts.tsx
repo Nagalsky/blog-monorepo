@@ -16,7 +16,7 @@ const Posts = ({ currentPage }: Props) => {
   if (error) return <p>Error loading data {error.message}</p>;
 
   return (
-    <section className="py-8">
+    <section className="py-8 md:py-14">
       <div className="container">
         <h1 className="mb-5 text-center text-3xl leading-normal font-semibold md:text-5xl">
           Latest posts

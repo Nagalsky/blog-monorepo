@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="py-8">
+    <div className="bg-accent py-8 md:py-14">
       <div className="container">
         <div className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-2 lg:items-center">
           <div className="space-y-4">
