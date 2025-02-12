@@ -18,8 +18,9 @@ export const fetchPosts = async ({
     skip,
     take,
   });
+
   return {
     posts: data.posts as Post[],
-    totalPosts: data.postCount,
+    totalPosts: data.totalPosts as number,
   };
 };
