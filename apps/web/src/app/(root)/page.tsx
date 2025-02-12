@@ -2,29 +2,41 @@ import { fetchPosts } from "@/actions/post.actions";
 import Hero from "@/components/common/hero";
 import Posts from "@/components/common/posts";
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
-import { Suspense } from "react";
+import getQueryClient from "@/lib/get-query-client";
+import { postsKeys } from "@/lib/query-keys";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function Home({ searchParams }: Props) {
+  const queryClient = getQueryClient();
+
   const { page } = await searchParams;
-  const { posts, totalPosts } = await fetchPosts({
-    page: page ? +page : undefined,
-    pageSize: DEFAULT_PAGE_SIZE,
-  });
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: postsKeys.all,
+      queryFn: () =>
+        fetchPosts({
+          page: page ? +page : undefined,
+          pageSize: DEFAULT_PAGE_SIZE,
+        }),
+    }),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <>
       <Hero />
-      <Suspense fallback={<p>Loading...</p>}>
-        <Posts
-          posts={posts}
-          currentPage={page ? +page : 1}
-          totalPages={Math.ceil(totalPosts / DEFAULT_PAGE_SIZE)}
-        />
-      </Suspense>
+      <HydrationBoundary state={dehydratedState}>
+        <Posts currentPage={page ? +page : 1} />
+      </HydrationBoundary>
+      {/* <Suspense fallback={<p>Loading...</p>}>
+  
+      </Suspense> */}
     </>
   );
 }

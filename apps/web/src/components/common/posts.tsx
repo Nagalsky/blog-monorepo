@@ -1,14 +1,20 @@
-import { Post } from "@/types/post.type";
+"use client";
+import { usePosts } from "@/hooks/query/use-posts";
+import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
 import PostCard from "./post-card";
 import PostsPagination from "./posts-pagination";
+import PostsSkeleton from "./posts-skeleton";
 
 type Props = {
-  posts: Post[];
   currentPage: number;
-  totalPages: number;
 };
 
-const Posts = ({ posts, currentPage, totalPages }: Props) => {
+const Posts = ({ currentPage }: Props) => {
+  const { data, isLoading, error } = usePosts(currentPage);
+
+  if (isLoading) return <PostsSkeleton />;
+  if (error) return <p>Error loading data {error.message}</p>;
+
   return (
     <section className="py-8">
       <div className="container">
@@ -17,15 +23,13 @@ const Posts = ({ posts, currentPage, totalPages }: Props) => {
         </h1>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <PostCard key={post.id} {...post} />
-          ))}
+          {data?.posts.map((post) => <PostCard key={post.id} {...post} />)}
         </div>
       </div>
 
       <PostsPagination
         currentPage={currentPage}
-        totalPages={totalPages}
+        totalPages={Math.ceil(data?.totalPosts / DEFAULT_PAGE_SIZE)}
         className="py-8"
       />
     </section>
