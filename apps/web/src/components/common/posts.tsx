@@ -1,8 +1,14 @@
-import { Suspense } from "react";
-import PostsList from "./posts-list";
-import PostsSkeleton from "./posts-skeleton";
+import { Post } from "@/types/post.type";
+import PostCard from "./post-card";
+import PostsPagination from "./posts-pagination";
 
-const Posts = () => {
+type Props = {
+  posts: Post[];
+  currentPage: number;
+  totalPages: number;
+};
+
+const Posts = ({ posts, currentPage, totalPages }: Props) => {
   return (
     <section className="py-8">
       <div className="container">
@@ -10,10 +16,18 @@ const Posts = () => {
           Latest posts
         </h1>
 
-        <Suspense fallback={<PostsSkeleton />}>
-          <PostsList />
-        </Suspense>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <PostCard key={post.id} {...post} />
+          ))}
+        </div>
       </div>
+
+      <PostsPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        className="py-8"
+      />
     </section>
   );
 };

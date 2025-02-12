@@ -1,15 +1,16 @@
-import qql from "graphql-tag";
+import gql from "graphql-tag";
 
-export const GET_POSTS = qql`
-query {
-	posts {
-		id
-		title
-		thumbnail
-		content
-		createdAt
-		updatedAt
-		slug
-	}
-}
+export const GET_POSTS = gql`
+  query posts($skip: Float, $take: Float) {
+    posts(skip: $skip, take: $take) {
+      id
+      title
+      thumbnail
+      content
+      createdAt
+      updatedAt
+      slug
+    }
+    postCount
+  }
 `;
