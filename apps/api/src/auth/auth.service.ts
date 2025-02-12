@@ -20,7 +20,7 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new UnauthorizedException('User Not Found');
+    if (!user) throw new UnauthorizedException('User not found!');
 
     const passwordMatched = await verify(user.password, password);
 
@@ -44,5 +44,19 @@ export class AuthService {
       avatar: user.avatar,
       accessToken,
     };
+  }
+
+  async validateJwtUser(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new UnauthorizedException('User not found!');
+
+    const currentUser = { id: user.id };
+
+    return currentUser;
   }
 }
