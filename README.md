@@ -7,7 +7,7 @@ This is a monorepo setup for a blog application using **NestJS** (backend) and *
 ```
 blog-app/
 │── apps/
-│   │── backend/   # NestJS application
+│   │── api/   # NestJS application
 │   │── frontend/  # Next.js application
 │── package.json   # Global package.json
 │── pnpm-lock.yaml # Lockfile for dependencies
