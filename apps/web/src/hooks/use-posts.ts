@@ -42,7 +42,7 @@ export function usePosts({
     status,
   } = useInfiniteQuery({
     queryKey: ["posts"],
-    queryFn: ({ pageParam = 1 }) =>
+    queryFn: async ({ pageParam = 1 }) =>
       fetchPosts({
         page: pageParam,
         pageSize,
