@@ -1,6 +1,6 @@
 "use client";
 import { SessionUser } from "@/lib/session";
-import { LogOutIcon } from "lucide-react";
+import { LogOutIcon, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -24,20 +24,13 @@ const UserDropdown = ({ user }: Props) => {
     router.refresh();
   };
 
-  const getAvatarFallback = (name: string) => {
-    const words = name.trim().split(/\s+/);
-    return words.length > 1
-      ? words.map((word) => word[0]).join("")
-      : name.slice(0, 2);
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="size-9 cursor-pointer">
           <AvatarImage src={user.avatar} alt={user.name} />
           <AvatarFallback>
-            {getAvatarFallback(user.name || "John Doe")}
+            <UserIcon className="size-4" />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
