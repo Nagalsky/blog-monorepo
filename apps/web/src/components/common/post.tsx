@@ -19,10 +19,8 @@ const Post = ({ id }: Props) => {
     notFound();
   }
 
-  console.log("data: ", post);
-
   return (
-    <div className="space-y-5">
+    <div className="mx-auto space-y-5 lg:max-w-9/12 xl:max-w-7/12">
       <h1 className="text-center text-3xl font-bold md:text-5xl">
         {post.title}
       </h1>
